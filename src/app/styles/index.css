@@ -1,0 +1,144 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&display=swap"); */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+/* 
+@font-face {
+  font-family: "Work Sans";
+  src: url("../fonts/WorkSans/WorkSans-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: auto;
+}
+@font-face {
+  font-family: "Work Sans";
+  src: url("../fonts/WorkSans/WorkSans-MediumItalic.ttf") format("truetype");
+  font-weight: 500;
+  font-style: italic;
+  font-display: auto;
+}
+
+@font-face {
+  font-family: "Work Sans";
+  src: url("../fonts/WorkSans/WorkSans-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: auto;
+}
+
+@font-face {
+  font-family: "Work Sans";
+  src: url("../fonts/WorkSans/WorkSans-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: auto;
+} */
+
+body {
+  background: #fcfdfd;
+  font-family: "Work Sans", "Arial", sans-serif;
+}
+
+.ant-form-item-explain-error {
+  @apply text-sm;
+}
+
+.ant-form-item-label {
+  @apply !font-medium;
+}
+
+.ant-input-group-addon {
+  @apply !bg-white !text-gray-500 !text-sm !font-medium !px-[6px];
+}
+
+.ant-form-item-extra {
+  @apply !text-sm !text-gray-700 !mt-[6px];
+}
+
+.ant-btn {
+  @apply inline-flex items-center justify-center;
+}
+
+.ant-btn-default {
+  @apply hover:!text-gray-700 hover:!border-gray-300;
+}
+
+.ant-form-horizontal .ant-form-item-row {
+  @apply items-center;
+}
+
+.ant-form-item-label {
+}
+
+.ant-modal-confirm .ant-modal-confirm-body-has-title > .anticon {
+  @apply !mt-[6px];
+}
+
+.ant-btn-primary {
+  @apply !text-white;
+}
+.ant-btn-dangerous.ant-btn-primary {
+  @apply !text-white;
+}
+
+.ant-modal-mask {
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  background-color: hsla(160, 1%, 52%, 0.5) !important;
+}
+
+.ant-segmented {
+  @apply rounded-full p-1;
+}
+
+.ant-segmented-thumb {
+  @apply rounded-full !important;
+}
+
+.ant-segmented .ant-segmented-item {
+  @apply rounded-full font-medium text-sm;
+}
+
+.ant-segmented-item-label {
+  @apply min-h-[32px] leading-8 !important;
+}
+
+.ant-segmented-item:not(.ant-segmented-item-selected) {
+  @apply text-gray-500;
+}
+
+.ant-menu-light.ant-menu-horizontal > .ant-menu-item {
+  @apply !text-gray-600;
+}
+
+.ant-menu-light.ant-menu-horizontal > .ant-menu-item-selected {
+  @apply !text-gray-800;
+}
+
+.ant-menu-light.ant-menu-horizontal > .ant-menu-item-selected::after {
+  @apply border-black;
+}
+
+.ant-menu-light.ant-menu-horizontal > .ant-menu-item-active::after {
+  @apply !border-gray-800;
+}
+
+.ant-slider-rail,
+.ant-slider-track {
+  @apply rounded-lg;
+}
+
+.ant-form-item-explain {
+  @apply mt-[6px];
+}
+
+.ant-form-item-explain + div {
+  @apply !h-[30px];
+}

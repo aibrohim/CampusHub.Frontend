@@ -1,0 +1,3 @@
+.Tooltip :global(.ant-tooltip-inner) {
+  @apply !text-center;
+}
