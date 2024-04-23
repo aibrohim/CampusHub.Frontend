@@ -1,5 +1,5 @@
 import type { MenuProps } from "antd";
-import { Layout, Menu } from "antd";
+import { Button, Layout, Menu } from "antd";
 import React, { FC, useState } from "react";
 import {
   IconBuilding,
@@ -10,8 +10,11 @@ import {
   IconUserSquare,
 } from "@tabler/icons-react";
 import { Link, Outlet } from "react-router-dom";
+import { tokenService } from "@/entities/Token";
+import { LogoutOutlined } from "@ant-design/icons";
+import { useGetUserQuery } from "@/entities/User";
 
-const { Sider, Content } = Layout;
+const { Sider, Content, Header } = Layout;
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -45,6 +48,7 @@ const items: MenuItem[] = [
 ];
 
 export const AppLayout: FC = () => {
+  const { data } = useGetUserQuery();
   const [collapsed, setCollapsed] = useState(false);
 
   return (
@@ -63,6 +67,22 @@ export const AppLayout: FC = () => {
         />
       </Sider>
       <Layout>
+        <Header className="bg-white flex justify-end items-center">
+          {data && (
+            <p className="my-0">
+              {data.firstName} {data.lastName}
+            </p>
+          )}
+          <Button
+            className="ml-3"
+            type="default"
+            onClick={() => {
+              tokenService.removeAccessToken();
+              window.location.reload();
+            }}
+            icon={<LogoutOutlined />}
+          ></Button>
+        </Header>
         <Content className="p-5">
           <Outlet />
         </Content>

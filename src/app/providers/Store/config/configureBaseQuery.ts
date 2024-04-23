@@ -3,7 +3,6 @@ import { message } from "antd";
 import { AxiosError, AxiosRequestConfig } from "axios";
 
 import { axiosInstance } from "@/shared/config/api";
-import { tokenService } from "@/entities/Token";
 
 interface FieldError {
   FieldName: string;
@@ -23,7 +22,9 @@ interface FieldsError {
 type BackendError = ProcessError | FieldsError;
 
 export const baseQuery =
-  (): BaseQueryFn<
+  (
+    tokenAccessor: () => string
+  ): BaseQueryFn<
     | {
         url: string;
         method: AxiosRequestConfig["method"];
@@ -53,7 +54,7 @@ export const baseQuery =
 
     const { withMessage = isMutation } = query;
 
-    const token = tokenService.getAccessToken();
+    const token = tokenAccessor();
 
     try {
       const result = await axiosInstance({
