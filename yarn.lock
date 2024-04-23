@@ -2867,11 +2867,6 @@ form-data@^4.0.0:
     combined-stream "^1.0.8"
     mime-types "^2.1.12"
 
-formik-antd@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.npmjs.org/formik-antd/-/formik-antd-2.0.4.tgz"
-  integrity sha512-3O87GtSFcwa+70pZuJu74yaWttiCnx4lJ4lbXcgx/WtLHSUAx9U2qlsxxwc7Nf7IeTQQbygijSCkqsKSCJHG6g==
-
 formik@^2.4.5:
   version "2.4.5"
   resolved "https://registry.npmjs.org/formik/-/formik-2.4.5.tgz"

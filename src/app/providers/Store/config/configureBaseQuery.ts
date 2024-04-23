@@ -4,6 +4,23 @@ import { AxiosError, AxiosRequestConfig } from "axios";
 
 import { axiosInstance } from "@/shared/config/api";
 
+interface FieldError {
+  FieldName: string;
+  Message: string;
+}
+
+interface ProcessError {
+  Message: string;
+  FieldErrors: null;
+}
+
+interface FieldsError {
+  Message: string;
+  FieldErrors: FieldError[];
+}
+
+type BackendError = ProcessError | FieldsError;
+
 export const baseQuery =
   (): BaseQueryFn<
     | {
@@ -43,20 +60,40 @@ export const baseQuery =
         params,
       });
       return { data: result.data };
-    } catch (axiosError) {
-      console.dir(axiosError);
+    } catch (error) {
+      console.dir(error);
 
-      const err = axiosError as AxiosError<{ message: string; error: string }>;
-      const status = err.response?.status;
+      const axiosError = error as AxiosError<BackendError>;
+      const status = axiosError.response?.status;
 
-      if (withMessage) {
-        message.error(err.response?.data?.message || err.message);
+      let messageTxt: string = "";
+
+      if (axiosError.isAxiosError) {
+        if (axiosError.response) {
+          if (axiosError.response.data.Message)
+            messageTxt = axiosError.response.data.Message;
+          else if (axiosError.response.data.FieldErrors)
+            messageTxt = axiosError.response.data.FieldErrors.map(
+              (e) => e.Message
+            ).join(", ");
+          else {
+            messageTxt = "Unknown error occurred";
+          }
+        } else if (axiosError.request) {
+          messageTxt = "No response from server";
+        } else {
+          messageTxt = `Error setting up request: ${axiosError.message}`;
+        }
+      } else {
+        messageTxt = `Non-Axios error: ${error}`;
       }
+
+      if (withMessage) message.error(messageTxt);
 
       return {
         error: {
           status,
-          data: err.response?.data || err.message,
+          message: messageTxt,
         },
       };
     }

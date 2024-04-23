@@ -20,7 +20,6 @@
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.10",
     "formik": "^2.4.5",
-    "formik-antd": "^2.0.4",
     "html-react-parser": "^5.0.9",
     "js-cookie": "^3.0.5",
     "rc-queue-anim": "^2.0.0",
