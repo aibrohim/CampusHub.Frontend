@@ -1,8 +1,6 @@
+import { IUser } from "@/entities/User";
+
 export interface ILoginRes {
   accessToken: string;
-  data: {
-    email: string;
-    firstName: string;
-    lastName: string;
-  };
+  data: IUser;
 }

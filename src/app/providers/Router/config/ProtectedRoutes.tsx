@@ -1,4 +1,4 @@
-import { RouteObject } from "react-router-dom";
+import { Navigate, RouteObject } from "react-router-dom";
 
 import { Buildings } from "@/pages/Buildings";
 import { Clubs } from "@/pages/Clubs";
@@ -8,7 +8,7 @@ import { Modules } from "@/pages/Modules";
 import { Rooms } from "@/pages/Rooms";
 import { Students } from "@/pages/Students";
 
-export const AppRoutes: RouteObject[] = [
+export const ProtectedRoutes: RouteObject[] = [
   {
     path: "/buildings",
     element: <Buildings />,
@@ -36,5 +36,9 @@ export const AppRoutes: RouteObject[] = [
   {
     path: "/clubs",
     element: <Clubs />,
+  },
+  {
+    path: "*",
+    element: <Navigate to="/" />,
   },
 ];

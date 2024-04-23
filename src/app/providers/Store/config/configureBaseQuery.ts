@@ -3,6 +3,7 @@ import { message } from "antd";
 import { AxiosError, AxiosRequestConfig } from "axios";
 
 import { axiosInstance } from "@/shared/config/api";
+import { tokenService } from "@/entities/Token";
 
 interface FieldError {
   FieldName: string;
@@ -43,7 +44,7 @@ export const baseQuery =
       };
     }
 
-    const { url, body, params } = query;
+    const { url, body, params, withToken = true } = query;
     let { method } = query;
     method = method?.toUpperCase();
 
@@ -52,12 +53,20 @@ export const baseQuery =
 
     const { withMessage = isMutation } = query;
 
+    const token = tokenService.getAccessToken();
+
     try {
       const result = await axiosInstance({
         url,
         method,
         data: body,
         params,
+        headers:
+          token && withToken
+            ? {
+                Authorization: `Bearer ${token}`,
+              }
+            : {},
       });
       return { data: result.data };
     } catch (error) {

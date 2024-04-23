@@ -3,34 +3,51 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import { AppLayout } from "@/layouts/App";
 
+import { useGetUserQuery } from "@/entities/User";
+
 import { PageLoading } from "@/shared/ui/PageLoading";
 
-import { AppRoutes } from "./config/AppPages";
 import { ErrorBoundary } from "../../ErrorBoundary";
-import { AuthPages } from "./config/AuthPages";
+import { ProtectedRoutes } from "./config/ProtectedRoutes";
+import { AuthRoutes } from "./config/AuthRoutes";
+import { PublicRoutes } from "./config/PublicRoutes";
 
 export const Router: FC = () => {
+  const { data, isLoading } = useGetUserQuery();
+
   return (
     <Suspense fallback={<PageLoading />}>
-      <RouterProvider
-        router={createBrowserRouter(
-          [
-            {
-              path: "/",
-              element: <AppLayout />,
-              children: AppRoutes,
-            },
-            {
-              path: "/",
-              children: AuthPages,
-            },
-          ].map((route) => ({
-            ...route,
-            errorElement: <ErrorBoundary />,
-          }))
-        )}
-        fallbackElement={<PageLoading />}
-      />
+      {isLoading && <PageLoading />}
+      {!isLoading && (
+        <RouterProvider
+          router={createBrowserRouter(
+            [
+              ...(data
+                ? [
+                    {
+                      path: "/",
+                      element: <AppLayout />,
+                      children: ProtectedRoutes,
+                    },
+                  ]
+                : [
+                    {
+                      path: "/",
+                      children: AuthRoutes,
+                    },
+                  ]),
+              {
+                path: "/",
+                children: PublicRoutes,
+              },
+            ].map((route) => ({
+              ...route,
+              errorElement: <ErrorBoundary />,
+            }))
+          )}
+          fallbackElement={<PageLoading />}
+        />
+      )}
     </Suspense>
   );
 };
