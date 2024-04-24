@@ -1,24 +1,10 @@
-import { Typography } from "antd";
+import { Spin, Typography } from "antd";
 
-import { ICourse, CourseCard } from "@/entities/Course";
+import { CourseCard, useGetCoursesQuery } from "@/entities/Course";
 import { AddCourse } from "@/features/AddCourse";
 
-const coursesList: ICourse[] = [
-  {
-    id: 1,
-    name: "Business Information Systems",
-  },
-  {
-    id: 2,
-    name: "Business and Management",
-  },
-  {
-    id: 3,
-    name: "Business Administration",
-  },
-];
-
 export const Courses = () => {
+  const { data: courses, isFetching } = useGetCoursesQuery();
   return (
     <>
       <Typography.Title>Courses</Typography.Title>
@@ -27,11 +13,13 @@ export const Courses = () => {
         <div className="col-span-4">
           <AddCourse />
         </div>
-        {coursesList.map((course) => (
-          <div key={course.id} className="col-span-4">
-            <CourseCard course={course} />
-          </div>
-        ))}
+        {isFetching && <Spin />}
+        {courses &&
+          courses.map((course) => (
+            <div key={course.id} className="col-span-4">
+              <CourseCard course={course} />
+            </div>
+          ))}
       </div>
     </>
   );

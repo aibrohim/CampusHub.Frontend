@@ -6,20 +6,22 @@ import { axiosInstance } from "@/shared/config/api";
 
 interface FieldError {
   FieldName: string;
-  Message: string;
+  message: string;
 }
 
 interface ProcessError {
-  Message: string;
-  FieldErrors: null;
+  message: string;
+  fieldErrors: null;
 }
 
 interface FieldsError {
-  Message: string;
-  FieldErrors: FieldError[];
+  message: string;
+  fieldErrors: FieldError[];
 }
 
 type BackendError = ProcessError | FieldsError;
+
+const mutationMethods = ["POST", "DELETE", "PUT", "PATCH"];
 
 export const baseQuery =
   (
@@ -27,7 +29,7 @@ export const baseQuery =
   ): BaseQueryFn<
     | {
         url: string;
-        method: AxiosRequestConfig["method"];
+        method: "POST" | "GET" | "DELETE" | "PUT" | "PATCH";
         body?: AxiosRequestConfig["data"];
         params?: AxiosRequestConfig["params"];
         withMessage?: boolean;
@@ -47,10 +49,8 @@ export const baseQuery =
 
     const { url, body, params, withToken = true } = query;
     let { method } = query;
-    method = method?.toUpperCase();
 
-    const isMutation =
-      method == "POST" || method == "PATCH" || method == "DELETE";
+    const isMutation = mutationMethods.includes(method);
 
     const { withMessage = isMutation } = query;
 
@@ -80,12 +80,12 @@ export const baseQuery =
 
       if (axiosError.isAxiosError) {
         if (axiosError.response) {
-          if (axiosError.response.data.Message)
-            messageTxt = axiosError.response.data.Message;
-          else if (axiosError.response.data.FieldErrors)
-            messageTxt = axiosError.response.data.FieldErrors.map(
-              (e) => e.Message
-            ).join(", ");
+          if (axiosError.response.data.message)
+            messageTxt = axiosError.response.data.message;
+          else if (axiosError.response.data.fieldErrors)
+            messageTxt = axiosError.response.data.fieldErrors
+              .map((e) => e.message)
+              .join(", ");
           else {
             messageTxt = "Unknown error occurred";
           }

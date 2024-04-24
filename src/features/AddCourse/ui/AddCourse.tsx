@@ -5,6 +5,7 @@ import { AddModal } from "./Modal";
 
 export const AddCourse: FC = () => {
   const [open, setOpen] = useState<boolean>(false);
+
   return (
     <Card>
       <Button type="default" block onClick={() => setOpen(true)}>

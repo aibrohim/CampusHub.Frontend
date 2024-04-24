@@ -9,7 +9,7 @@ interface IAddModalProps {
 
 export const AddModal: FC<IAddModalProps> = ({ open, onClose }) => {
   return (
-    <Modal open={open} onCancel={onClose} title="Add Room" footer={null}>
+    <Modal open={open} onCancel={onClose} title="Add Course" footer={null}>
       <AddForm onAdd={onClose} />
     </Modal>
   );

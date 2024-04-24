@@ -1,50 +1,29 @@
-import { Typography } from "antd";
-import { FC } from "react";
+import { Spin, Typography } from "antd";
 
-import { GroupCard, IGroup } from "@/entities/Group";
-import { AddBuilding } from "@/features/AddBuilding";
+import { GroupCard, useGetGroupsQuery } from "@/entities/Group";
+import { AddGroup } from "@/features/AddGroup";
+import { useParams } from "react-router-dom";
 
-const groupsList: IGroup[] = [
-  {
-    id: 1,
-    name: "6BsBIS01",
-  },
-  {
-    id: 1,
-    name: "6BsBIS02",
-  },
-  {
-    id: 1,
-    name: "6BsBIS03",
-  },
-  {
-    id: 1,
-    name: "6BsBIS04",
-  },
-  {
-    id: 1,
-    name: "6BsBIS05",
-  },
-  {
-    id: 1,
-    name: "6BsBIS06",
-  },
-];
+export const Groups = () => {
+  const { id: courseId } = useParams() as { id: string };
 
-export const Groups: FC = () => {
+  const { data: groups, isFetching } = useGetGroupsQuery(courseId);
+
   return (
     <>
       <Typography.Title>Groups</Typography.Title>
 
-      <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-3">
-          <AddBuilding />
+      <div className="grid grid-cols-12 gap-3">
+        <div className="col-span-4">
+          <AddGroup courseId={courseId} />
         </div>
-        {groupsList.map((group) => (
-          <div key={group.id} className="col-span-3">
-            <GroupCard group={group} />
-          </div>
-        ))}
+        {isFetching && <Spin />}
+        {groups &&
+          groups.map((group) => (
+            <div key={group.id} className="col-span-4">
+              <GroupCard group={group} />
+            </div>
+          ))}
       </div>
     </>
   );

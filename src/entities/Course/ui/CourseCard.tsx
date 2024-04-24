@@ -10,7 +10,7 @@ interface ICourseCardProps {
 
 export const CourseCard: FC<ICourseCardProps> = ({ course }) => {
   return (
-    <Link to="/course/single/modules">
+    <Link to={`/course/${course.id}/modules`}>
       <Card>
         <Typography.Text className="!my-0">{course.name}</Typography.Text>
       </Card>

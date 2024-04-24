@@ -1,9 +1,8 @@
 import { Spin } from "antd";
-import styles from "./Loading.module.scss";
 
 export const PageLoading = () => {
   return (
-    <div className={styles.ldsRing}>
+    <div className="w-full h-full flex justify-center items-center">
       <Spin size="large" />
     </div>
   );

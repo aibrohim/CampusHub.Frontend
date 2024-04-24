@@ -2,6 +2,8 @@ import { Form } from "antd";
 import { Formik } from "formik";
 import { FC } from "react";
 
+import { useAddCourseMutation } from "@/entities/Course";
+
 import { FormItem } from "@/shared/ui/formik/FormItem";
 import { Input } from "@/shared/ui/formik/Input";
 import { SubmitButton } from "@/shared/ui/formik/SubmitButton";
@@ -19,11 +21,12 @@ const initialValues: IFormState = {
 };
 
 export const AddForm: FC<IAddFormProps> = ({ onAdd }) => {
-  const handleFormSubmit = (values: IFormState) => {
-    console.log(values);
+  const [addCourse] = useAddCourseMutation();
 
-    onAdd();
-  };
+  const handleFormSubmit = (values: IFormState) =>
+    addCourse(values)
+      .unwrap()
+      .then(() => onAdd());
 
   return (
     <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>

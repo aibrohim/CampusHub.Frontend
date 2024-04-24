@@ -1,4 +1,7 @@
+import { ICourse } from "@/entities/Course";
+
 export interface IModule {
-  id: number;
+  id: string;
   name: string;
+  course: ICourse;
 }

@@ -10,7 +10,7 @@ interface IGroupCardProps {
 
 export const GroupCard: FC<IGroupCardProps> = ({ group }) => {
   return (
-    <Link to="/group/single/students">
+    <Link to={`/group/${group.id}`}>
       <Card>
         <Typography.Text className="!my-0">{group.name}</Typography.Text>
       </Card>
